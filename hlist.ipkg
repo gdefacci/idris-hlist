@@ -1,0 +1,21 @@
+package hlist
+
+modules = Data.HList,
+          Test.HList
+
+tests = Test.HList.testLength,
+        Test.HList.testGet,
+        Test.HList.testSet,
+        Test.HList.testHead,
+        Test.HList.testLast,
+        Test.HList.testZip,
+        Test.HList.testTake,
+        Test.HList.testDrop,
+        Test.HList.testInit,
+        Test.HList.testTail,
+        Test.HList.testConcat,
+        Test.HList.testUpdate,
+        Test.HList.testInsertAt,
+        Test.HList.testInsertAt0,
+        Test.HList.testInsertAt3,
+        Test.HList.testDeleteAt
