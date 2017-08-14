@@ -9,9 +9,6 @@ data HList: (n :Nat) -> Vect n Type -> Type where
   Nil : HList 0 []
   (::) : t -> (HList n tps) -> HList (S n) (t :: tps)
 
-typeof : (x : t) -> Type
-typeof {t} _ = t
-
 get : (fin:Fin n1) -> HList n1 tps -> (index fin tps)
 get FZ (y :: z) = y
 get (FS x) (y :: z) = get x z
@@ -24,16 +21,16 @@ head : HList (S len) (h :: tps) -> h
 head (x :: y) = x
 
 LastType : HList (S n) (a :: tps) -> Type
-LastType (x :: []) = typeof x
-LastType (x :: l1 @ (t :: ts)) = LastType l1
+LastType {a} (x :: []) = a
+LastType {a} (x :: l1 @ (t :: ts)) = LastType l1
 
 last : ( l : HList (S n) (t :: ts) ) -> LastType l
 last (x :: []) = x
 last (x :: l1 @ (y :: z)) = last l1
 
 ZipTypeVect : HList n ts1 -> HList n ts2 -> Vect n Type
-ZipTypeVect [] [] =  []
-ZipTypeVect (x :: z) (y :: w) = (typeof (x,y)) ::  ZipTypeVect z w
+ZipTypeVect {ts1 = []} {ts2 = []} [] [] = []
+ZipTypeVect {ts1 = (t :: tps)} {ts2 = (y :: xs)} (x :: z) (w :: s) = (t, y) :: ZipTypeVect z s
 
 ZipType : HList n ts1 -> HList n ts2 -> Type
 ZipType {n} x y = HList n (ZipTypeVect x y)
