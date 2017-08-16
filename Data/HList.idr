@@ -95,3 +95,9 @@ DeleteAtType fin x = HList _ $ deleteAtTypeVect fin x
 deleteAt : (fin:Fin n) -> (l : HList (S n) tps) -> (DeleteAtType fin l)
 deleteAt FZ (x :: y) = y
 deleteAt (FS x) (y :: z) = y :: deleteAt x z
+
+implementation Eq (HList 0 []) where
+  (==) []      []      = True
+
+implementation (Eq a, Eq (HList len elems)) => Eq (HList (S len) (a :: elems)) where
+  (==) (x::xs) (y::ys) = x == y && xs == ys
