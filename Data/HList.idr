@@ -85,16 +85,18 @@ insertAt FZ l x = x :: l
 insertAt (FS y) [] x = [x]
 insertAt (FS y) (z :: w) x = z :: insertAt y w x
 
-deleteAtTypeVect : (fin:Fin n) -> (HList (S n) tps) -> Vect n Type
+deleteAtTypeVect : (fin:Fin (S n)) -> (HList (S n) tps) -> Vect n Type
 deleteAtTypeVect {tps = (t :: xs)} FZ (x :: y) = xs
-deleteAtTypeVect {tps = (t :: xs)} (FS y) (x :: z) = t :: (deleteAtTypeVect y z)
+deleteAtTypeVect {tps = (t :: (y :: tps))} (FS FZ) (x :: (z :: w)) = t :: tps
+deleteAtTypeVect {tps = (t :: xs)} (FS (FS y)) (x :: z) = t :: (deleteAtTypeVect (FS y) z)
 
-DeleteAtType : (fin:Fin n) -> (HList (S n) tps) -> Type
+DeleteAtType : (fin:Fin (S n)) -> (HList (S n) tps) -> Type
 DeleteAtType fin x = HList _ $ deleteAtTypeVect fin x
 
-deleteAt : (fin:Fin n) -> (l : HList (S n) tps) -> (DeleteAtType fin l)
+deleteAt : (fin:Fin (S n)) -> (l : HList (S n) tps) -> (DeleteAtType fin l)
 deleteAt FZ (x :: y) = y
-deleteAt (FS x) (y :: z) = y :: deleteAt x z
+deleteAt (FS FZ) (y :: (x :: z)) = y :: z
+deleteAt (FS (FS x)) (y :: z) = y :: deleteAt (FS x) z
 
 implementation Eq (HList 0 []) where
   (==) []      []      = True

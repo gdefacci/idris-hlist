@@ -84,13 +84,9 @@ testInsertAt = do
   assertEq "TestInsertAt" [S Z, 10, True, "Yeah"] $ insertAt 1 sample3 10
   assertEq "TestInsertAt" [S Z, True, 10, "Yeah"] $ insertAt 2 sample3 10
 
-    -- sample3 = [S Z, True, "Yeah"]
-    -- sample3a = [True, "Yeah", 10]
-    -- sample4 = [False, "Text", 10, 4]
-
 testDeleteAt : IO ()
 testDeleteAt = do
   assertEq "DeleteAt" ["Text", 10, 4] $ deleteAt 0 sample4
   assertEq "DeleteAt" [False, 10, 4] $ deleteAt 1 sample4
   assertEq "DeleteAt" [False, "Text", 4] $ deleteAt 2 sample4
-  -- assertEq "DeleteAt" [False, "Text", 10] $ deleteAt 3 sample4
+  assertEq "DeleteAt" [False, "Text", 10] $ deleteAt 3 sample4
