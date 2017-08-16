@@ -16,4 +16,5 @@ tests = Test.HList.testLength,
         Test.HList.testConcat,
         Test.HList.testUpdate,
         Test.HList.testInsertAt,
-        Test.HList.testDeleteAt
+        Test.HList.testDeleteAt,
+        Test.HList.testOrd

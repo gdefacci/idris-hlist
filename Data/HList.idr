@@ -103,3 +103,39 @@ implementation Eq (HList 0 []) where
 
 implementation (Eq a, Eq (HList len elems)) => Eq (HList (S len) (a :: elems)) where
   (==) (x::xs) (y::ys) = x == y && xs == ys
+
+implementation Ord (HList 0 []) where
+  compare []      []      = EQ
+
+implementation (Ord a, Ord (HList len elems)) => Ord (HList (S len) (a :: elems)) where
+  compare (x::xs) (y::ys) = compare x y `thenCompare` compare xs ys
+
+-- isPrefixOf : Eq (HList n tps) => HList n tps -> HList (n + m) (tps ++ tps1) -> Bool
+-- isPrefixOf {m=Z} {n=Z} [] y = True
+-- isPrefixOf {m=m} {n=S k} h1 h2 = h1 == (take {m = m} (S k) h2)
+
+-- interface Hap a f r where
+--   hap : a -> f -> r
+--
+-- implementation Hap (HList 0 []) (HList 0 []) (HList 0 []) where
+--     hap a b = a
+--
+-- implementation Hap (HList n elems1) (HList n elems2) (HList n elemsR) => Hap (HList (S n) (a :: elems1)) (HList (S n) ( (a -> b) :: elems2)) (HList (S n) (b :: elemsR)) where
+--   hap (x::xs) (f::ys) = (f x) :: hap xs ys
+
+-- f11 : Integer -> String
+-- f11 a = "bau"
+--
+-- f12 : String -> String
+-- f12 a = "bau"
+--
+-- f13 : Nat -> String
+-- f13 a = "bau"
+--
+-- sample1 : IO ()
+-- sample1 =
+--   let a = the (HList _ _) [1, "2", S Z]
+--       b = the (HList _ _) [f11, f12, f13]
+--       c = hap ( the (HList _ _) []) ( the (HList _ _) [])
+--   in do
+--       putStrLn ""

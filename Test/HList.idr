@@ -21,6 +21,10 @@ sample3a = [True, "Yeah", 10]
 sample4 : HList 4 [Bool, String, Integer, Nat]
 sample4 = [False, "Text", 10, 4]
 
+sample4a : HList 4 [Bool, String, Integer, Nat]
+sample4a = [False, "Text", 11, 4]
+
+
 testLength :  IO ()
 testLength = do
   assertEq "length" (length sample3) 3
@@ -90,3 +94,8 @@ testDeleteAt = do
   assertEq "DeleteAt" [False, 10, 4] $ deleteAt 1 sample4
   assertEq "DeleteAt" [False, "Text", 4] $ deleteAt 2 sample4
   assertEq "DeleteAt" [False, "Text", 10] $ deleteAt 3 sample4
+
+testOrd : IO ()
+testOrd = do
+  assertEq "TestOrd" True $ sample4 < sample4a
+  assertEq "TestOrd" False $ sample4 > sample4a
