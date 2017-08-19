@@ -25,10 +25,10 @@ sample4a : HList 4 [Bool, String, Integer, Nat]
 sample4a = [False, "Text", 11, 4]
 
 
-testLength :  IO ()
-testLength = do
-  assertEq "length" (length sample3) 3
-  assertEq "length" (length sample4) 4
+testHLength :  IO ()
+testHLength = do
+  assertEq "Hlength" (hlength sample3) 3
+  assertEq "Hlength" (hlength sample4) 4
 
 testGet :  IO ()
 testGet =
@@ -99,3 +99,13 @@ testOrd : IO ()
 testOrd = do
   assertEq "TestOrd" True $ sample4 < sample4a
   assertEq "TestOrd" False $ sample4 > sample4a
+
+testHap : IO ()
+testHap =
+  let res = hap [1, "---", S Z] [f11, f12, \a => "nat" ++ (show a)]
+  in assertEq "testHap" [S (S Z), 3, "nat1"] res
+  where
+    f11 : Integer -> Nat
+    f11 a = S (cast a)
+    f12 : String -> Integer
+    f12 a = cast $ Prelude.Strings.length a

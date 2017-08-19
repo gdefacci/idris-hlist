@@ -3,7 +3,7 @@ package hlist
 modules = Data.HList,
           Test.HList
 
-tests = Test.HList.testLength,
+tests = Test.HList.testHLength,
         Test.HList.testGet,
         Test.HList.testSet,
         Test.HList.testHead,
@@ -17,4 +17,5 @@ tests = Test.HList.testLength,
         Test.HList.testUpdate,
         Test.HList.testInsertAt,
         Test.HList.testDeleteAt,
-        Test.HList.testOrd
+        Test.HList.testOrd,
+        Test.HList.testHap
