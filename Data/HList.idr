@@ -13,9 +13,12 @@ get : (fin:Fin n1) -> HList n1 tps -> (index fin tps)
 get FZ (y :: z) = y
 get (FS x) (y :: z) = get x z
 
+setWith : (fin:Fin n1) -> HList n1 tps -> ((index fin tps) -> (index fin tps)) -> HList n1 tps
+setWith FZ (x :: z) f = (f x) :: z
+setWith (FS s) (x :: w) y = x :: (setWith s w y)
+
 set : (fin:Fin n1) -> HList n1 tps -> (index fin tps) -> HList n1 tps
-set FZ (x :: z) y = y :: z
-set (FS s) (x :: w) y = x :: (set s w y)
+set fin x y = setWith fin x (\a => y)
 
 head : HList (S len) (h :: tps) -> h
 head (x :: y) = x

@@ -5,6 +5,7 @@ modules = Data.HList,
 
 tests = Test.HList.testHLength,
         Test.HList.testGet,
+        Test.HList.testSetWith,
         Test.HList.testSet,
         Test.HList.testHead,
         Test.HList.testLast,

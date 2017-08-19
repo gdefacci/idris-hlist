@@ -42,6 +42,11 @@ testSet = do
   assertEq "TestSet" [Z, True, "Yeah"] $ set 0 sample3 Z
   assertEq "TestSet" [S Z, False, "Yeah"] $ set 1 sample3 False
 
+testSetWith : IO ()
+testSetWith = do
+  assertEq "TestSetWith" [S (S Z), True, "Yeah"] $ setWith 0 sample3 (\x => (S x) )
+  assertEq "TestSetWith" [S Z, False, "Yeah"] $ setWith 1 sample3 (\x => not x)
+
 testHead : IO ()
 testHead = assertEq "TestHead" (S Z) $ head sample3
 
